@@ -1,0 +1,13 @@
+#Base image
+#This Dockerfile sets up a MySQL 5.7 container.
+#It pre-loads your database schema/data from devopsclass.sql on container initialization.
+#Perfect for creating a ready-to-use database with initial data.
+
+FROM mysql:5.7.28
+
+#COPY
+#docker-entrypoint-initdb.d special directory inside official MySQL Docker containers.
+#When you start a new MySQL container, the startup scripts look inside this folder.
+#Any SQL files (*.sql), compressed SQL (*.sql.gz), or shell scripts (*.sh) placed here are automatically executed — 
+#but only when the database is initialized for the first time
+COPY ./dump/devopsclass.sql /docker-entrypoint-initdb.d

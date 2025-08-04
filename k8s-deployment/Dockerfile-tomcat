@@ -1,0 +1,15 @@
+#Uses the official Tomcat 8.5 image from Docker Hub as the base.
+#This image already has Tomcat installed and configured.
+FROM tomcat:8.5
+
+#Copies your built WAR file (LoginWebApp.war) from your local machine into Tomcat’s webapps folder inside the container.
+#Tomcat auto-deploys any WAR file placed here when it starts.
+COPY ./LoginWebApp.war /usr/local/tomcat/webapps/
+
+#Sets the working directory inside the container to the webapps folder.
+#This means any following commands will run relative to this path
+WORKDIR /usr/local/tomcat/webapps/
+
+#Runs the Tomcat server in the foreground when the container starts.
+#catalina.sh run starts Tomcat without detaching, so Docker keeps the container running.
+CMD ["catalina.sh", "run"]

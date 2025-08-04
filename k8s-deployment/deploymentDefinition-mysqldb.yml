@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysqldb-deployment
+  namespace: dev
+  labels:
+    app: mysqldb
+    type: back-end
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: back-end
+  template:
+    metadata:
+      name: mysqldb-pod
+      labels:
+        app: mysqldb
+        type: back-end
+    spec:
+      containers:
+      - name: mysqldb
+        image: kritikajha94/mysql:11
+        ports:
+          - containerPort: 3306
+        envFrom:
+          - configMapRef:
+              name: db-config
+          - secretRef:
+              name: db-secret
+        volumeMounts:
+          - name: mysql-storage
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-storage
+          emptyDir: {}

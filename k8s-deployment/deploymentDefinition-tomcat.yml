@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcatweb-deployment
+  namespace: dev
+  labels:
+     app: tomcatwebapp
+     type: front-end
+spec:
+  template:
+    metadata:
+     name: tomcatweb-pod
+     labels:
+        app: tomcatwebapp
+        type: front-end
+    spec:
+      containers:
+      - name: tomcatweb
+        image: kritikajha94/loginwebapp:13
+
+  replicas: 2
+  selector:
+     matchLabels:
+        type: front-end
